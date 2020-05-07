@@ -4,14 +4,13 @@
 // Error handling in the server as compared to a client is different.
 // The server should run forever, so that if any error occurs with a client
 // the server just ignores that client and carries on.
-
-Excerpt From: Unknown. “Table of Contents”. Apple Books. 
 package main
 
 import (
 	"log"
 	"net"
-	"time"
+
+	"go-network-programming/daytime-server/daytime"
 )
 
 func main() {
@@ -33,22 +32,13 @@ func main() {
 		// on an accept request or call from the client
 		// create a connection object that is returned.
 		// it will block on accept() till a connection request is sent.
-		// the server can only respond to one client at a time
 		log.Println("waiting for new client connection")
 		conn, err := listener.Accept()
 		if err != nil {
 			continue
 		}
 
-		daytime := time.Now().String()
-		// respond to the client, we need to send bytes.
-		time.Sleep(15 * time.Second) // simulate a delay
-		conn.Write([]byte(daytime + "\n"))
-		log.Println("responded to new client")
-		// we are done with the client, time to close up.
-		// and wait for the next call.
-		if err := conn.Close(); err != nil {
-			log.Println(err)
-		}
+		// handle more client requests in new goroutines
+		go daytime.CurrentTime(conn)
 	}
 }
