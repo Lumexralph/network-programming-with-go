@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	address := ":1200"
+	address := ":1300"
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", address)
 	if err != nil {
 		log.Fatal(err)
@@ -28,6 +28,26 @@ func main() {
 			continue // on no account should the server quit because of a client error
 		}
 
+		go handleEcho(conn)
 	}
+}
 
+func handleEcho(conn net.Conn) {
+	defer conn.Close()
+	var buf [512]byte
+
+	for {
+		n, err := conn.Read(buf[0:])
+		if err != nil {
+			log.Println(err)
+			return
+		}
+
+		// respond to the client
+		_, err = conn.Write(buf[0:n])
+		if err != nil {
+			log.Println(err)
+			return
+		}
+	}
 }
