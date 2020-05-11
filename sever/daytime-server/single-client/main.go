@@ -14,14 +14,14 @@ import (
 )
 
 func main() {
-	address := ":1200"
-	tcpAddr, err := net.ResolveTCPAddr("tcp4", address)
+	addr := ":1200"
+	TCPAddr, err := net.ResolveTCPAddr("tcp4", addr)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// bind the server to a port on the host machine
-	listener, err := net.ListenTCP("tcp", tcpAddr)
+	listener, err := net.ListenTCP("tcp", TCPAddr)
 	if err != nil {
 		log.Fatalf("could not bind to port: %s\n", err)
 	}
