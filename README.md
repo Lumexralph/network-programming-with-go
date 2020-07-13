@@ -1,6 +1,6 @@
 # Network Programming using Go
 
-This contains all the learnings and some code when study Network Programming with Go, using by that title, written by Jan Newmarch.
+This contains all the learnings and some code when study Network Programming with Go, using by that title, written by Jan Newmarch https://www.apress.com/gp/book/9781484226919.
 
 ## Contents and Topics Studied
 
